@@ -1,0 +1,20 @@
+# ===== Backend (Python) =====
+engemap-backend/.venv/
+engemap-backend/__pycache__/
+engemap-backend/**/__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+engemap-backend/.env
+*.db
+*.sqlite3
+
+# ===== Editores / IDE =====
+.vscode/
+.idea/
+*.swp
+
+# ===== Sistema operacional =====
+.DS_Store
+Thumbs.db
