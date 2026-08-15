@@ -1,6 +1,6 @@
 # Projeto Engemap
 
-Teste prático — sistema de gerenciamento de Missões (Projetos) e Faixas de
+Teste prático — Sistema de gerenciamento de Missões (Projetos) e Faixas de
 coordenadas para execução por aeronave.
 
 ## Estrutura
