@@ -9,6 +9,7 @@ engemap-backend/**/__pycache__/
 engemap-backend/.env
 *.db
 *.sqlite3
+.env
 
 # ===== Editores / IDE =====
 .vscode/

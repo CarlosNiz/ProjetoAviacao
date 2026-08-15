@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16
+    container_name: engemap-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: engemap
+      POSTGRES_PASSWORD: engemap
+      POSTGRES_DB: engemap
+    ports:
+      - "5432:5432"
+    volumes:
+      - engemap_db_data:/var/lib/postgresql/data
+  
+volumes:
+  engemap_db_data:
