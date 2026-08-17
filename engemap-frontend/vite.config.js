@@ -1,7 +1,19 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import electron from 'vite-plugin-electron/simple';
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-})
+  plugins: [
+    react(),
+    electron({
+      main: {
+        entry: 'electron/main.js',
+      },
+      preload: {
+        input: 'electron/preload.js',
+      },
+      // Permite que o renderer use APIs do Node quando necessario.
+      renderer: process.env.NODE_ENV === 'test' ? undefined : {},
+    }),
+  ],
+});
