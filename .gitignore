@@ -11,6 +11,13 @@ engemap-backend/.env
 *.sqlite3
 .env
 
+# ===== Frontend (Node / Electron) =====
+engemap-frontend/node_modules/
+engemap-frontend/dist/
+engemap-frontend/dist-electron/
+engemap-frontend/release/
+engemap-frontend/.env
+
 # ===== Editores / IDE =====
 .vscode/
 .idea/
