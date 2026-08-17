@@ -1,5 +1,8 @@
 import { useState } from 'react';
 
+import cores from '../theme/cores';
+
+/** Formulario de cadastro de projeto: numero e nome sao obrigatorios. */
 function FormularioNovoProjeto({ aoCriar }) {
   const [numero, setNumero] = useState('');
   const [nome, setNome] = useState('');
@@ -44,9 +47,11 @@ function FormularioNovoProjeto({ aoCriar }) {
 
 const estiloDoCampo = {
   padding: '8px 10px',
-  border: '1px solid #ccc',
+  border: `1px solid ${cores.borda}`,
   borderRadius: 6,
   fontSize: 14,
+  background: cores.fundoElevado,
+  color: cores.texto,
 };
 
 function estiloDoBotao(habilitado) {
@@ -56,7 +61,7 @@ function estiloDoBotao(habilitado) {
     borderRadius: 6,
     fontSize: 14,
     color: '#fff',
-    background: habilitado ? '#1a73e8' : '#9bb8e3',
+    background: habilitado ? cores.primaria : cores.primariaDesabilitada,
     cursor: habilitado ? 'pointer' : 'not-allowed',
   };
 }

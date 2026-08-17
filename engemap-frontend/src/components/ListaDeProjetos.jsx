@@ -1,7 +1,13 @@
+import cores from '../theme/cores';
+
 /** Lista lateral de projetos, com selecao e exclusao. */
 function ListaDeProjetos({ projetos, projetoSelecionadoId, aoSelecionar, aoExcluir }) {
   if (projetos.length === 0) {
-    return <p style={{ color: '#666', fontSize: 14 }}>Nenhum projeto cadastrado ainda.</p>;
+    return (
+      <p style={{ color: cores.textoSecundario, fontSize: 14 }}>
+        Nenhum projeto cadastrado ainda.
+      </p>
+    );
   }
 
   return (
@@ -18,8 +24,8 @@ function ListaDeProjetos({ projetos, projetoSelecionadoId, aoSelecionar, aoExclu
               gap: 8,
               padding: '10px 12px',
               borderRadius: 6,
-              border: `1px solid ${selecionado ? '#1a73e8' : '#ddd'}`,
-              background: selecionado ? '#e8f0fe' : '#fff',
+              border: `1px solid ${selecionado ? cores.bordaDestaque : cores.borda}`,
+              background: selecionado ? cores.selecionado : cores.fundoElevado,
             }}
           >
             <button
@@ -31,10 +37,11 @@ function ListaDeProjetos({ projetos, projetoSelecionadoId, aoSelecionar, aoExclu
                 background: 'transparent',
                 cursor: 'pointer',
                 fontSize: 14,
+                color: cores.texto,
               }}
             >
-              <strong style={{ color: 'black' }}>{projeto.numero}</strong>
-              <span style={{ color: '#555' }}> — {projeto.nome}</span>
+              <strong>{projeto.numero}</strong>
+              <span style={{ color: cores.textoSecundario }}> — {projeto.nome}</span>
             </button>
             <button
               onClick={() => aoExcluir(projeto)}
@@ -42,7 +49,7 @@ function ListaDeProjetos({ projetos, projetoSelecionadoId, aoSelecionar, aoExclu
               style={{
                 border: 'none',
                 background: 'transparent',
-                color: '#d93025',
+                color: cores.perigo,
                 cursor: 'pointer',
                 fontSize: 13,
               }}

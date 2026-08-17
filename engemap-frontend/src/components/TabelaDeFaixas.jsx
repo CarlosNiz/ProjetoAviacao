@@ -1,8 +1,10 @@
+import cores from '../theme/cores';
+
 /** Tabela de faixas do projeto, com alteracao de estado e exclusao. */
 function TabelaDeFaixas({ faixas, aoAlternarEstado, aoExcluir }) {
   if (faixas.length === 0) {
     return (
-      <p style={{ color: '#666', fontSize: 14 }}>
+      <p style={{ color: cores.textoSecundario, fontSize: 14 }}>
         Nenhuma faixa importada neste projeto ainda.
       </p>
     );
@@ -11,7 +13,7 @@ function TabelaDeFaixas({ faixas, aoAlternarEstado, aoExcluir }) {
   return (
     <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
       <thead>
-        <tr style={{ background: '#f5f5f5', textAlign: 'left' }}>
+        <tr style={{ background: cores.fundoElevado, textAlign: 'left' }}>
           <th style={estiloDaCelula}>Nome</th>
           <th style={estiloDaCelula}>Lat. A</th>
           <th style={estiloDaCelula}>Lon. A</th>
@@ -36,7 +38,7 @@ function TabelaDeFaixas({ faixas, aoAlternarEstado, aoExcluir }) {
                   checked={faixa.executada}
                   onChange={(e) => aoAlternarEstado(faixa, e.target.checked)}
                 />
-                <span style={{ color: faixa.executada ? '#1e8e3e' : '#777' }}>
+                <span style={{ color: faixa.executada ? cores.sucesso : cores.textoSecundario }}>
                   {faixa.executada ? 'Executada' : 'Nao executada'}
                 </span>
               </label>
@@ -47,7 +49,7 @@ function TabelaDeFaixas({ faixas, aoAlternarEstado, aoExcluir }) {
                 style={{
                   border: 'none',
                   background: 'transparent',
-                  color: '#d93025',
+                  color: cores.perigo,
                   cursor: 'pointer',
                   fontSize: 13,
                 }}
@@ -64,7 +66,8 @@ function TabelaDeFaixas({ faixas, aoAlternarEstado, aoExcluir }) {
 
 const estiloDaCelula = {
   padding: '8px 10px',
-  borderBottom: '1px solid #e5e5e5',
+  borderBottom: `1px solid ${cores.borda}`,
+  color: cores.texto,
 };
 
 export default TabelaDeFaixas;

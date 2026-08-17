@@ -7,6 +7,7 @@ import ListaDeProjetos from './components/ListaDeProjetos';
 import Mensagem from './components/Mensagem';
 import PainelDoProjeto from './components/PainelDoProjeto';
 import useMensagem from './hooks/useMensagem';
+import cores from './theme/cores';
 
 function App() {
   const [projetos, setProjetos] = useState([]);
@@ -103,8 +104,17 @@ function App() {
   }
 
   return (
-    <div style={{ fontFamily: 'system-ui, sans-serif', height: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <header style={{ padding: '16px 24px', borderBottom: '1px solid #e0e0e0' }}>
+    <div
+      style={{
+        fontFamily: 'system-ui, sans-serif',
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        background: cores.fundo,
+        color: cores.texto,
+      }}
+    >
+      <header style={{ padding: '16px 24px', borderBottom: `1px solid ${cores.borda}` }}>
         <h1 style={{ margin: 0, fontSize: 20 }}>Engemap — Gerenciamento de Missoes</h1>
       </header>
 
@@ -112,7 +122,16 @@ function App() {
         <Mensagem tipo={mensagem.tipo} texto={mensagem.texto} />
       </div>
 
-      <main style={{ flex: 1, display: 'grid', gridTemplateColumns: '340px 1fr', gap: 24, padding: '0 24px 24px', overflow: 'hidden' }}>
+      <main
+        style={{
+          flex: 1,
+          display: 'grid',
+          gridTemplateColumns: '340px 1fr',
+          gap: 24,
+          padding: '0 24px 24px',
+          overflow: 'hidden',
+        }}
+      >
         <section style={{ overflowY: 'auto' }}>
           <h2 style={{ fontSize: 16, marginTop: 0 }}>Projetos</h2>
           <FormularioNovoProjeto aoCriar={cadastrarProjeto} />

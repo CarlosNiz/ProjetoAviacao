@@ -1,13 +1,16 @@
+import cores from '../theme/cores';
+
+/** Exibe o feedback de sucesso ou erro da ultima operacao realizada. */
 function Mensagem({ tipo, texto }) {
   if (!texto) {
     return null;
   }
 
-  const cores = {
-    sucesso: { fundo: '#e6f4ea', borda: '#34a853', texto: '#1e4620' },
-    erro: { fundo: '#fce8e6', borda: '#d93025', texto: '#5f1410' },
+  const paleta = {
+    sucesso: { fundo: '#1c3326', borda: cores.sucesso, texto: '#a9e8bf' },
+    erro: { fundo: '#3a1f1f', borda: cores.perigo, texto: '#f5b3b1' },
   };
-  const cor = cores[tipo] ?? cores.erro;
+  const cor = paleta[tipo] ?? paleta.erro;
 
   return (
     <div

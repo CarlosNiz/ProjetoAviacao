@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react';
 
+import cores from '../theme/cores';
+
 /** Seleciona um arquivo .txt e dispara a importacao de faixas no projeto. */
 function ImportadorDeFaixas({ aoImportar }) {
   const [arquivoSelecionado, setArquivoSelecionado] = useState(null);
@@ -24,6 +26,8 @@ function ImportadorDeFaixas({ aoImportar }) {
     }
   }
 
+  const podeImportar = arquivoSelecionado && !importando;
+
   return (
     <div
       style={{
@@ -31,9 +35,10 @@ function ImportadorDeFaixas({ aoImportar }) {
         alignItems: 'center',
         gap: 10,
         padding: 12,
-        border: '1px dashed #bbb',
+        border: `1px dashed ${cores.borda}`,
         borderRadius: 6,
         marginBottom: 16,
+        background: cores.fundoSutil,
       }}
     >
       <input
@@ -41,19 +46,19 @@ function ImportadorDeFaixas({ aoImportar }) {
         type="file"
         accept=".txt"
         onChange={(e) => setArquivoSelecionado(e.target.files?.[0] ?? null)}
-        style={{ fontSize: 14 }}
+        style={{ fontSize: 14, color: cores.texto }}
       />
       <button
         onClick={importar}
-        disabled={!arquivoSelecionado || importando}
+        disabled={!podeImportar}
         style={{
           padding: '8px 14px',
           border: 'none',
           borderRadius: 6,
           fontSize: 14,
           color: '#fff',
-          background: arquivoSelecionado && !importando ? '#1a73e8' : '#9bb8e3',
-          cursor: arquivoSelecionado && !importando ? 'pointer' : 'not-allowed',
+          background: podeImportar ? cores.primaria : cores.primariaDesabilitada,
+          cursor: podeImportar ? 'pointer' : 'not-allowed',
         }}
       >
         {importando ? 'Importando...' : 'Importar faixas'}

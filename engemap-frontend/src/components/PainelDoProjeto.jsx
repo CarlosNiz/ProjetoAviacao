@@ -1,3 +1,4 @@
+import cores from '../theme/cores';
 import ImportadorDeFaixas from './ImportadorDeFaixas';
 import TabelaDeFaixas from './TabelaDeFaixas';
 
@@ -11,7 +12,7 @@ function PainelDoProjeto({
 }) {
   if (!projeto) {
     return (
-      <p style={{ color: '#666', fontSize: 14 }}>
+      <p style={{ color: cores.textoSecundario, fontSize: 14 }}>
         Selecione um projeto na lista para ver suas faixas.
       </p>
     );
@@ -19,10 +20,10 @@ function PainelDoProjeto({
 
   return (
     <div>
-      <h2 style={{ margin: '0 0 4px', fontSize: 18 }}>
+      <h2 style={{ margin: '0 0 4px', fontSize: 18, color: cores.texto }}>
         {projeto.numero} — {projeto.nome}
       </h2>
-      <p style={{ margin: '0 0 16px', color: '#666', fontSize: 13 }}>
+      <p style={{ margin: '0 0 16px', color: cores.textoSecundario, fontSize: 13 }}>
         {projeto.faixas.length} faixa(s) cadastrada(s)
       </p>
 
@@ -30,10 +31,10 @@ function PainelDoProjeto({
 
       {linhasRejeitadas.length > 0 && (
         <details style={{ marginBottom: 16, fontSize: 13 }}>
-          <summary style={{ cursor: 'pointer', color: '#b06000' }}>
+          <summary style={{ cursor: 'pointer', color: cores.alerta }}>
             {linhasRejeitadas.length} linha(s) rejeitada(s) na ultima importacao
           </summary>
-          <ul style={{ margin: '8px 0 0', paddingLeft: 20, color: '#5f1410' }}>
+          <ul style={{ margin: '8px 0 0', paddingLeft: 20, color: cores.textoSecundario }}>
             {linhasRejeitadas.map((linha, indice) => (
               <li key={indice}>
                 {linha.numero_linha > 0 && <strong>Linha {linha.numero_linha}: </strong>}
