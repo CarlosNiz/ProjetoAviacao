@@ -33,7 +33,7 @@ function ListaDeProjetos({ projetos, projetoSelecionadoId, aoSelecionar, aoExclu
                 fontSize: 14,
               }}
             >
-              <strong>{projeto.numero}</strong>
+              <strong style={{ color: 'black' }}>{projeto.numero}</strong>
               <span style={{ color: '#555' }}> — {projeto.nome}</span>
             </button>
             <button
