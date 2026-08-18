@@ -106,7 +106,8 @@ pronto para exibição direta na interface do frontend.
 
 ## Formato do arquivo de importação de faixas
 
-Arquivo `.txt`, uma faixa por linha, campos separados por `;`:
+Arquivo `.txt`, uma faixa por linha, campos separados por `;`. As coordenadas
+devem ter **exatamente 6 casas decimais**:
 
 ```
 nome;latitude_a;longitude_a;latitude_b;longitude_b
@@ -115,6 +116,6 @@ nome;latitude_a;longitude_a;latitude_b;longitude_b
 Exemplo:
 
 ```
-faixa1;-23.55;-46.63;-23.56;-46.64
-faixa2;-22.90;-43.20;-22.91;-43.21
+faixa1;-23.556677;-46.633088;-23.557788;-46.634199
+faixa2;-22.900011;-43.200022;-22.910033;-43.210044
 ```

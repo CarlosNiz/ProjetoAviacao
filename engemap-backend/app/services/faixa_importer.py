@@ -1,19 +1,32 @@
 """
-Responsável por interpretar o conteudo de um arquivo .txt de faixas.
+Responsavel por interpretar o conteudo de um arquivo .txt de faixas.
 
 Cada linha valida deve seguir o formato:
     nome;latitude_a;longitude_a;latitude_b;longitude_b
 
-Decisão de projeto: linhas mal formatadas ou com nomes duplicados são
-reportadas individualmente e NÃO interrompem o processamento das demais
+As coordenadas devem ter exatamente 6 casas decimais. A verificacao e feita
+sobre o texto original, antes da conversao para float, porque a conversao
+descarta zeros a direita (float("1.500000") == 1.5) e tornaria impossivel
+distinguir "1.5" de "1.500000".
+
+Decisao de projeto: linhas mal formatadas ou com nomes duplicados sao
+reportadas individualmente e NAO interrompem o processamento das demais
 linhas do arquivo (importacao parcial). A camada de servico decide se a
-importa~ão como um todo deve falhar (por exemplo, quando nenhuma faixa
-valida sobrar). Esta função e pura (sem I/O), o que a torna fácil e rápida
+importacao como um todo deve falhar (por exemplo, quando nenhuma faixa
+valida sobrar). Esta funcao e pura (sem I/O), o que a torna facil e rapida
 de testar isoladamente.
 """
+import re
 from dataclasses import dataclass
 
 CAMPOS_ESPERADOS = 5
+CASAS_DECIMAIS_EXIGIDAS = 6
+
+# Aceita sinal opcional, parte inteira e exatamente 6 casas decimais.
+# Notacao cientifica e rejeitada de proposito: o formato de entrada e fixo.
+PADRAO_COORDENADA = re.compile(r"^[+-]?\d+\.\d{6}$")
+
+ROTULOS_DAS_COORDENADAS = ("latitude A", "longitude A", "latitude B", "longitude B")
 
 
 @dataclass
@@ -89,22 +102,24 @@ def _parsear_linha(linha: str, numero_linha: int) -> FaixaImportada | LinhaRejei
             numero_linha=numero_linha, conteudo=linha, motivo="nome da faixa nao pode ser vazio."
         )
 
-    try:
-        latitude_a = float(campos[1].strip())
-        longitude_a = float(campos[2].strip())
-        latitude_b = float(campos[3].strip())
-        longitude_b = float(campos[4].strip())
-    except ValueError:
-        return LinhaRejeitada(
-            numero_linha=numero_linha,
-            conteudo=linha,
-            motivo="latitude e longitude precisam ser numeros validos (double).",
-        )
+    coordenadas: list[float] = []
+    for rotulo, texto_bruto in zip(ROTULOS_DAS_COORDENADAS, campos[1:], strict=True):
+        texto = texto_bruto.strip()
+        if not PADRAO_COORDENADA.match(texto):
+            return LinhaRejeitada(
+                numero_linha=numero_linha,
+                conteudo=linha,
+                motivo=(
+                    f"{rotulo} invalida: '{texto}' - esperado um numero com exatamente "
+                    f"{CASAS_DECIMAIS_EXIGIDAS} casas decimais (ex: -23.556677)."
+                ),
+            )
+        coordenadas.append(float(texto))
 
     return FaixaImportada(
         nome=nome,
-        latitude_a=latitude_a,
-        longitude_a=longitude_a,
-        latitude_b=latitude_b,
-        longitude_b=longitude_b,
+        latitude_a=coordenadas[0],
+        longitude_a=coordenadas[1],
+        latitude_b=coordenadas[2],
+        longitude_b=coordenadas[3],
     )
