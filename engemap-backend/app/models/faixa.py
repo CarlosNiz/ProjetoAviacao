@@ -15,7 +15,7 @@ class Faixa(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     projeto_id: Mapped[int] = mapped_column(ForeignKey("projetos.id"), nullable=False)
-    nome: Mapped[str] = mapped_column(String(255), nullable=False)
+    nome: Mapped[str] = mapped_column(String(64), nullable=False)
     latitude_a: Mapped[float] = mapped_column(Float, nullable=False)
     longitude_a: Mapped[float] = mapped_column(Float, nullable=False)
     latitude_b: Mapped[float] = mapped_column(Float, nullable=False)

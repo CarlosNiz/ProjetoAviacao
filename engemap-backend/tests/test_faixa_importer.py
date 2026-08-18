@@ -102,3 +102,22 @@ def test_rejeita_nome_duplicado_dentro_do_proprio_arquivo() -> None:
     assert len(resultado.faixas) == 1
     assert len(resultado.linhas_rejeitadas) == 1
     assert "duplicado" in resultado.linhas_rejeitadas[0].motivo
+
+
+def test_rejeita_nome_de_faixa_acima_de_64_caracteres() -> None:
+    nome_longo = "x" * 65
+    conteudo = f"{nome_longo};-23.556677;-46.633088;-23.557788;-46.634199"
+
+    resultado = parsear_conteudo(conteudo)
+
+    assert resultado.faixas == []
+    assert "64 caracteres" in resultado.linhas_rejeitadas[0].motivo
+
+
+def test_aceita_nome_de_faixa_com_exatamente_64_caracteres() -> None:
+    nome_no_limite = "x" * 64
+    conteudo = f"{nome_no_limite};-23.556677;-46.633088;-23.557788;-46.634199"
+
+    resultado = parsear_conteudo(conteudo)
+
+    assert len(resultado.faixas) == 1

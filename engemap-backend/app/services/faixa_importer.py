@@ -21,6 +21,7 @@ from dataclasses import dataclass
 
 CAMPOS_ESPERADOS = 5
 CASAS_DECIMAIS_EXIGIDAS = 6
+TAMANHO_MAXIMO_DO_NOME = 64
 
 # Aceita sinal opcional, parte inteira e exatamente 6 casas decimais.
 # Notacao cientifica e rejeitada de proposito: o formato de entrada e fixo.
@@ -100,6 +101,16 @@ def _parsear_linha(linha: str, numero_linha: int) -> FaixaImportada | LinhaRejei
     if not nome:
         return LinhaRejeitada(
             numero_linha=numero_linha, conteudo=linha, motivo="nome da faixa nao pode ser vazio."
+        )
+
+    if len(nome) > TAMANHO_MAXIMO_DO_NOME:
+        return LinhaRejeitada(
+            numero_linha=numero_linha,
+            conteudo=linha,
+            motivo=(
+                f"nome da faixa excede o limite de {TAMANHO_MAXIMO_DO_NOME} caracteres "
+                f"({len(nome)} informados)."
+            ),
         )
 
     coordenadas: list[float] = []
