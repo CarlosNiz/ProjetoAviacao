@@ -11,8 +11,8 @@ class Projeto(Base):
     __tablename__ = "projetos"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    numero: Mapped[str] = mapped_column(String(50), unique=True, nullable=False, index=True)
-    nome: Mapped[str] = mapped_column(String(255), nullable=False)
+    numero: Mapped[int] = mapped_column(Integer, unique=True, nullable=False, index=True)
+    nome: Mapped[str] = mapped_column(String(64), nullable=False)
 
     faixas: Mapped[list["Faixa"]] = relationship(
         back_populates="projeto", cascade="all, delete-orphan"

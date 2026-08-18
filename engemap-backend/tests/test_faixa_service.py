@@ -12,7 +12,7 @@ from app.services.projeto_service import ProjetoService
 
 
 def _criar_projeto(db_session) -> Projeto:
-    return ProjetoService(db_session).criar(numero="P001", nome="Missao Norte")
+    return ProjetoService(db_session).criar(numero=1, nome="Missao Norte")
 
 
 def test_importa_faixas_validas(db_session) -> None:
@@ -78,7 +78,7 @@ def test_atualiza_estado_da_faixa(db_session) -> None:
 
 def test_nao_permite_alterar_faixa_de_outro_projeto(db_session) -> None:
     projeto_a = _criar_projeto(db_session)
-    projeto_b = ProjetoService(db_session).criar(numero="P002", nome="Missao Sul")
+    projeto_b = ProjetoService(db_session).criar(numero=2, nome="Missao Sul")
     faixas, _ = FaixaService(db_session).importar(projeto_a.id, "faixa1;1.0;2.0;3.0;4.0")
 
     with pytest.raises(FaixaNaoEncontradaError):

@@ -20,8 +20,8 @@ class ErroDeNegocio(Exception):
 class ProjetoNumeroDuplicadoError(ErroDeNegocio):
     """O numero de projeto informado ja esta em uso por outro projeto."""
 
-    def __init__(self, numero: str) -> None:
-        super().__init__(f"Ja existe um projeto cadastrado com o numero '{numero}'.")
+    def __init__(self, numero: int) -> None:
+        super().__init__(f"Ja existe um projeto cadastrado com o numero {numero}.")
 
 
 class ProjetoNaoEncontradoError(ErroDeNegocio):

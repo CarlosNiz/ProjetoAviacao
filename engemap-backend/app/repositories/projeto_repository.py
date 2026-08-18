@@ -9,7 +9,7 @@ class ProjetoRepository:
     def __init__(self, db: Session) -> None:
         self._db = db
 
-    def buscar_por_numero(self, numero: str) -> Projeto | None:
+    def buscar_por_numero(self, numero: int) -> Projeto | None:
         stmt = select(Projeto).where(Projeto.numero == numero)
         return self._db.scalar(stmt)
 

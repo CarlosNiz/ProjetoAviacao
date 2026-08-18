@@ -10,7 +10,7 @@ class ProjetoService:
     def __init__(self, db: Session) -> None:
         self._repo = ProjetoRepository(db)
 
-    def criar(self, numero: str, nome: str) -> Projeto:
+    def criar(self, numero: int, nome: str) -> Projeto:
         """Cadastra um projeto. O numero e o identificador de negocio e deve ser unico."""
         if self._repo.buscar_por_numero(numero) is not None:
             raise ProjetoNumeroDuplicadoError(numero)

@@ -12,7 +12,7 @@ function FormularioNovoProjeto({ aoCriar }) {
     evento.preventDefault();
     setSalvando(true);
     try {
-      await aoCriar(numero.trim(), nome.trim());
+      await aoCriar(Number(numero), nome.trim());
       setNumero('');
       setNome('');
     } finally {
@@ -20,22 +20,23 @@ function FormularioNovoProjeto({ aoCriar }) {
     }
   }
 
-  const podeSalvar = numero.trim() !== '' && nome.trim() !== '' && !salvando;
+  const podeSalvar = Number(numero) > 0 && nome.trim() !== '' && !salvando;
 
   return (
     <form onSubmit={submeter} style={{ display: 'grid', gap: 8, marginBottom: 20 }}>
       <input
         value={numero}
-        onChange={(e) => setNumero(e.target.value)}
+        onChange={(e) => setNumero(e.target.value.replace(/\D/g, ''))}
         placeholder="Numero do projeto"
-        maxLength={50}
+        inputMode="numeric"
+        maxLength={9}
         style={estiloDoCampo}
       />
       <input
         value={nome}
         onChange={(e) => setNome(e.target.value)}
         placeholder="Nome do projeto"
-        maxLength={255}
+        maxLength={64}
         style={estiloDoCampo}
       />
       <button type="submit" disabled={!podeSalvar} style={estiloDoBotao(podeSalvar)}>
