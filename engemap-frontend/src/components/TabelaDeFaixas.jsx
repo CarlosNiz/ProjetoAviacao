@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 
 import cores from '../theme/cores';
+import formatarDistancia from '../utils/formatarDistancia';
 
 /** Tabela de faixas do projeto, com ordenacao por nome, alteracao de estado e exclusao. */
 function TabelaDeFaixas({ faixas, aoAlternarEstado, aoExcluir }) {
@@ -56,6 +57,7 @@ function TabelaDeFaixas({ faixas, aoAlternarEstado, aoExcluir }) {
           <th style={estiloDaCelula}>Lon. A</th>
           <th style={estiloDaCelula}>Lat. B</th>
           <th style={estiloDaCelula}>Lon. B</th>
+          <th style={estiloDaCelula}>Distancia</th>
           <th style={estiloDaCelula}>Executada</th>
           <th style={estiloDaCelula}></th>
         </tr>
@@ -68,6 +70,7 @@ function TabelaDeFaixas({ faixas, aoAlternarEstado, aoExcluir }) {
             <td style={estiloDaCelula}>{faixa.longitude_a}</td>
             <td style={estiloDaCelula}>{faixa.latitude_b}</td>
             <td style={estiloDaCelula}>{faixa.longitude_b}</td>
+            <td style={estiloDaCelula}>{formatarDistancia(faixa.distancia_metros)}</td>
             <td style={estiloDaCelula}>
               <label style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                 <input

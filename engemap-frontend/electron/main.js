@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Menu} from 'electron';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -17,8 +17,6 @@ function criarJanelaPrincipal() {
     title: 'Engemap',
     webPreferences: {
       preload: path.join(__dirname, 'preload.mjs'),
-      // Mantem o renderer isolado do Node: o React so acessa o que for
-      // exposto explicitamente pelo preload.
       contextIsolation: true,
       nodeIntegration: false,
     },
@@ -32,6 +30,9 @@ function criarJanelaPrincipal() {
 }
 
 app.whenReady().then(() => {
+
+  Menu.setApplicationMenu(null);
+  
   criarJanelaPrincipal();
 
   app.on('activate', () => {

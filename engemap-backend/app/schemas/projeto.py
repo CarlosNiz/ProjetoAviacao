@@ -1,7 +1,7 @@
 """Schemas Pydantic (contratos de entrada/saida da API) para Projeto."""
 from pydantic import BaseModel, ConfigDict, Field
 
-from app.schemas.faixa import FaixaResumo
+from app.schemas.faixa import FaixaResumo, ResumoDeExecucao
 
 
 class ProjetoCriar(BaseModel):
@@ -19,3 +19,4 @@ class ProjetoResumo(BaseModel):
 
 class ProjetoDetalhe(ProjetoResumo):
     faixas: list[FaixaResumo] = []
+    resumo: ResumoDeExecucao

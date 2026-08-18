@@ -5,6 +5,9 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.schemas.projeto import ProjetoCriar, ProjetoDetalhe, ProjetoResumo
 from app.services.projeto_service import ProjetoService
+from app.schemas.faixa import ResumoDeExecucao
+from app.services.resumo_de_execucao import calcular_resumo
+from app.schemas.faixa import FaixaResumo
 
 router = APIRouter(prefix="/projetos", tags=["projetos"])
 
@@ -24,9 +27,17 @@ def listar_projetos(db: Session = Depends(get_db)) -> list[ProjetoResumo]:
 @router.get("/{projeto_id}", response_model=ProjetoDetalhe)
 def obter_projeto(projeto_id: int, db: Session = Depends(get_db)) -> ProjetoDetalhe:
     projeto = ProjetoService(db).buscar_por_id(projeto_id)
-    return ProjetoDetalhe.model_validate(projeto)
+    return ProjetoDetalhe(
+        id=projeto.id,
+        numero=projeto.numero,
+        nome=projeto.nome,
+        faixas=[FaixaResumo.model_validate(faixa) for faixa in projeto.faixas],
+        resumo=ResumoDeExecucao.model_validate(calcular_resumo(projeto.faixas)),
+    )
 
 
 @router.delete("/{projeto_id}", status_code=status.HTTP_204_NO_CONTENT)
 def excluir_projeto(projeto_id: int, db: Session = Depends(get_db)) -> None:
     ProjetoService(db).excluir(projeto_id)
+
+    

@@ -95,3 +95,11 @@ def test_nao_permite_alterar_faixa_de_outro_projeto(db_session) -> None:
 
     with pytest.raises(FaixaNaoEncontradaError):
         FaixaService(db_session).atualizar_estado(projeto_b.id, faixas[0].id, executada=True)
+
+
+def test_calcula_e_persiste_a_distancia_na_importacao(db_session) -> None:
+    projeto = _criar_projeto(db_session)
+
+    faixas, _ = FaixaService(db_session).importar(projeto.id, FAIXA_1)
+
+    assert faixas[0].distancia_metros > 0

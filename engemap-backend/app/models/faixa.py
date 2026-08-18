@@ -20,6 +20,7 @@ class Faixa(Base):
     longitude_a: Mapped[float] = mapped_column(Float, nullable=False)
     latitude_b: Mapped[float] = mapped_column(Float, nullable=False)
     longitude_b: Mapped[float] = mapped_column(Float, nullable=False)
+    distancia_metros: Mapped[float] = mapped_column(Float, nullable=False)
     executada: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
 
     projeto: Mapped["Projeto"] = relationship(back_populates="faixas")

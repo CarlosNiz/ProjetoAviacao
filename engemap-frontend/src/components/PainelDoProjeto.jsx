@@ -1,6 +1,7 @@
 import cores from '../theme/cores';
 import ImportadorDeFaixas from './ImportadorDeFaixas';
 import TabelaDeFaixas from './TabelaDeFaixas';
+import ResumoDeExecucao from './ResumoDeExecucao';
 
 /** Painel lateral com os detalhes do projeto selecionado e suas faixas. */
 function PainelDoProjeto({
@@ -20,12 +21,11 @@ function PainelDoProjeto({
 
   return (
     <div>
-      <h2 style={{ margin: '0 0 4px', fontSize: 18, color: cores.texto }}>
+      <h2 style={{ margin: '0 0 12px', fontSize: 18, color: cores.texto }}>
         {projeto.numero} — {projeto.nome}
       </h2>
-      <p style={{ margin: '0 0 16px', color: cores.textoSecundario, fontSize: 13 }}>
-        {projeto.faixas.length} faixa(s) cadastrada(s)
-      </p>
+
+      <ResumoDeExecucao resumo={projeto.resumo} />
 
       <ImportadorDeFaixas aoImportar={aoImportar} />
 

@@ -1,6 +1,6 @@
 # Projeto Engemap
 
-Teste prático — aplicação desktop para gerenciamento de **Missões** (Projetos)
+Teste prático: aplicação desktop para gerenciamento de **Missões** (Projetos)
 e suas **Faixas** de coordenadas a serem executadas por uma aeronave.
 
 ## Estrutura do repositório
@@ -32,9 +32,9 @@ A aplicação é dividida em dois processos independentes que se comunicam via
                                     └───────────────────────────┘
 ```
 
-A escolha por uma API REST local reduz o acoplamento entre frontend e backend e permite testar o
-CRUD de projetos e a importação de faixas isoladamente, antes de integrar com
-a interface.
+A escolha por uma API REST local reduz o acoplamento entre frontend e backend
+e permite testar o CRUD de projetos e a importação de faixas isoladamente,
+antes de integrar com a interface.
 
 ## Stack
 
@@ -113,13 +113,17 @@ Os testes usam SQLite em memória, não é necessário o Docker estar rodando.
 - Importação de faixas a partir de arquivo `.txt`, dentro de um projeto
   previamente selecionado
 - Validação de formato e de duplicidade de nome de faixa dentro do projeto
+- Cálculo automático da distância de cada faixa entre os pontos A e B
+- Acompanhamento do progresso do projeto: distância planejada, distância
+  executada e percentual de execução
 - Alteração do estado de execução da faixa (Executada / Não Executada)
 - Exclusão de projetos (em cascata com suas faixas) e de faixas individuais
 - Feedback claro de sucesso ou erro em toda operação
 
 ## Formato do arquivo de importação
 
-Arquivo `.txt`, uma faixa por linha, campos separados por `;`:
+Arquivo `.txt`, uma faixa por linha, campos separados por `;`. As coordenadas
+devem ter **exatamente 6 casas decimais**:
 
 ```
 nome;latitude_a;longitude_a;latitude_b;longitude_b
@@ -128,9 +132,38 @@ nome;latitude_a;longitude_a;latitude_b;longitude_b
 Exemplo:
 
 ```
-faixa1;-23.55;-46.63;-23.56;-46.64
-faixa2;-22.90;-43.20;-22.91;-43.21
+faixa1;-23.556677;-46.633088;-23.557788;-46.634199
+faixa2;-22.900011;-43.200022;-22.910033;-43.210044
 ```
 
 O arquivo funciona apenas como meio de entrada: nenhuma cópia dele é mantida
 pelo sistema, apenas as faixas nele contidas são persistidas.
+
+Linhas inválidas são rejeitadas individualmente e reportadas ao usuário com o
+número da linha e o motivo. A importação só falha por completo se nenhuma
+faixa válida restar ao final.
+
+## Regras de validação
+
+- Número do projeto: inteiro positivo, único no sistema
+- Nome do projeto: obrigatório, até 64 caracteres
+- Nome da faixa: único dentro do projeto
+- Coordenadas: exatamente 6 casas decimais
+
+## Cálculo de distância e progresso
+
+A distância de cada faixa é calculada entre os pontos A e B pela fórmula de
+haversine (distância *great-circle* sobre um modelo esférico da Terra), com o
+resultado armazenado em **metros**.
+
+O percentual de execução do projeto é obtido pela razão entre a soma das
+distâncias das faixas executadas e a soma das distâncias de todas as faixas do
+projeto:
+
+```
+percentual_executado = (soma das distâncias das faixas executadas /
+                        soma das distâncias de todas as faixas) × 100
+```
+
+Detalhes sobre a escolha do método e sua precisão em
+[`engemap-backend/README.md`](engemap-backend/README.md).

@@ -10,6 +10,7 @@ from app.models.faixa import Faixa
 from app.repositories.faixa_repository import FaixaRepository
 from app.repositories.projeto_repository import ProjetoRepository
 from app.services.faixa_importer import LinhaRejeitada, parsear_conteudo
+from app.services.geodesia import calcular_distancia_em_metros
 
 
 class FaixaService:
@@ -60,6 +61,12 @@ class FaixaService:
                     longitude_a=faixa_importada.longitude_a,
                     latitude_b=faixa_importada.latitude_b,
                     longitude_b=faixa_importada.longitude_b,
+                    distancia_metros=calcular_distancia_em_metros(
+                        faixa_importada.latitude_a,
+                        faixa_importada.longitude_a,
+                        faixa_importada.latitude_b,
+                        faixa_importada.longitude_b,
+                    ),
                 )
             )
 
